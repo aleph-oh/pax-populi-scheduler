@@ -47,6 +47,9 @@ class Scheduler:
         self.sink = Vertex('SINK')
 
     def get_max_flow_network(self):
+        # for gender matching sake
+        epsilon = 0.0001
+
         # Add nodes
         network = nx.DiGraph()
         network.add_node(self.source)
@@ -60,8 +63,10 @@ class Scheduler:
         for student in self.students:
             for tutor in self.tutors:
                 if student.can_match(tutor, self.weeks_per_course):
-                    network.add_edge(student.user_id, tutor.user_id,
-                                     capacity=1)
+                    if student.gender_compatible(tutor):
+                        network.add_edge(student.user_id, tutor.user_id, capacity=1)
+                    else:
+                        network.add_edge(student.user_id, tutor.user_id, capacity=1-epsilon)
         for tutor in self.tutors:
             network.add_edge(tutor.user_id, self.sink, capacity=1)
         return network

@@ -266,7 +266,6 @@ class User:
         if weeks_per_course <= 0:
             raise ValueError('weeks_per_course must be a positive integer')
         return (self.availability_matches(tutor, weeks_per_course)
-                and self.share_course(tutor)
-                and self.gender_compatible(tutor))
+                and self.share_course(tutor))
 
     
