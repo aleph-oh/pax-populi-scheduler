@@ -47,8 +47,8 @@ class Scheduler:
         self.sink = Vertex('SINK')
 
     def get_max_flow_network(self):
-        # for gender matching sake
-        epsilon = 0.0001
+        # for preferred time matching sake
+        epsilon = 0.001
 
         # Add nodes
         network = nx.DiGraph()
@@ -62,11 +62,10 @@ class Scheduler:
             network.add_edge(self.source, student.user_id, capacity=1)
         for student in self.students:
             for tutor in self.tutors:
-                if student.can_match(tutor, self.weeks_per_course):
-                    if student.gender_compatible(tutor):
-                        network.add_edge(student.user_id, tutor.user_id, capacity=1)
-                    else:
-                        network.add_edge(student.user_id, tutor.user_id, capacity=1-epsilon)
+                if student.can_match_pref(tutor, self.weeks_per_course):
+                    network.add_edge(student.user_id, tutor.user_id, capacity=1)
+                elif student.can_match(tutor, self.weeks_per_course):
+                    network.add_edge(student.user_id, tutor.user_id, capacity=1-epsilon)
         for tutor in self.tutors:
             network.add_edge(tutor.user_id, self.sink, capacity=1)
         return network
@@ -79,7 +78,7 @@ class Scheduler:
             edge_dict = flow_dict[student.user_id]
             for tutor_id in edge_dict:
                 flow = edge_dict[tutor_id]
-                if flow == 1:
+                if flow > 0:
                     tutor = self.tutor_id_to_tutor[tutor_id]
                     matches = student.get_availability_matches(tutor, self.weeks_per_course)
                     student_tutor_to_matches[(student.user_id, tutor.user_id)] = matches
