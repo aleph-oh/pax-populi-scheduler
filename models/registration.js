@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var validators = require("mongoose-validator");
+var validators = require("mongoose-validators");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var async = require('async');
 var User = require('../models/user.js');
