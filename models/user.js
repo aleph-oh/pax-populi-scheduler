@@ -6,7 +6,7 @@ var email = require('../javascripts/email.js');
 var enums = require("../javascripts/enums.js");
 var config = require('../javascripts/config.js');
 var authentication = require('../javascripts/authentication.js');
-var validators = require("mongoose-validators");
+var validators = require("mongoose-validator");
 var regexs = require("../javascripts/regexs.js");
 
 var UserSchema = mongoose.Schema({

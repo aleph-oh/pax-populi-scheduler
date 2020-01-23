@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var validators = require("mongoose-validators");
+var validators = require("mongoose-validator");
 var enums = require('../javascripts/enums.js');
 
 // this enum object is intend to have only instance because its use is to
