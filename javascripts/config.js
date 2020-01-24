@@ -3,39 +3,39 @@ var Config = function() {
  	var that = Object.create(Config.prototype);
 
  	that.emailAddress = function () {
- 		return 'gmailAddressOfTheApp';
+ 		return 'aecfg2020test@gmail.com';
  	}
 
  	that.emailPassword = function () {
- 		return 'gmailPasswordOfTheApp';
+ 		return 'password11!';
  	}
 
  	that.productionUrl = function () {
- 		return 'http://productionURLOfTheApp'
+ 		return 'http://localhost:3000'
  	}
 
  	that.adminUsername = function () {
- 		return 'superAdminUsername';
+ 		return 'superAdmin';
  	}
 
  	that.adminFirstName = function () {
- 		return 'superAdminFirstName';
+ 		return 'test';
  	}
 
  	that.adminLastName = function () {
- 		return 'superAdminLastName';
+ 		return 'administrator';
  	}
 
  	that.adminPhoneNumber = function () {
- 		return 0000000000;
+ 		return 5550000000;
  	}
 
  	that.adminPassword = function () {
- 		return 'superAdminPasswordForThisApp';
+ 		return 'password11!';
  	}
 
  	that.adminEmailAddress = function () {
- 		return 'superAdminEmailAddress';
+ 		return 'aecfg2020test@gmail.com';
  	}
 
  	Object.freeze(that);
