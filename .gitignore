@@ -10,3 +10,11 @@ scheduler/.coverage
 scheduler/htmlcov/*
 .env/*
 runthepython.sh
+.idea/dictionaries/jay.xml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/pax-populi-scheduler.iml
+.idea/vcs.xml
+.idea/workspace.xml
+public/.idea/workspace.xml
