@@ -116,7 +116,7 @@ User.initializeSuperAdmin(function (err, superAdmin) {
         console.log('ensured that super admin account exist');
     }
 });
-
+console.log('error testing')
 // error handlers
 
 // development error handler
