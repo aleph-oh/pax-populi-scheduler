@@ -1,4 +1,3 @@
-node_modules/*
 npm-debug.log
 public/availability.html
 public/javascripts/vendor/bower_components

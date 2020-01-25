@@ -309,6 +309,10 @@ UserSchema.statics.archiveUser = function (username, callback) {
 */
 UserSchema.statics.authenticate = function (username, password, callback) {
     this.findOne({ username: username }, function (err, user) {
+        console.log(username)
+        if (user === null) {
+            console.log('There was an error')
+        }
         if (err || user === null) {
             callback({message:'Please enter a valid username'});
         } else {

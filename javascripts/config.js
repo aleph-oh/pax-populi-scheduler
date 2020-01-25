@@ -15,7 +15,7 @@ var Config = function() {
  	}
 
  	that.adminUsername = function () {
- 		return 'superAdmin';
+ 		return 'superadmin';
  	}
 
  	that.adminFirstName = function () {
