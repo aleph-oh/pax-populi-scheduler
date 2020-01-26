@@ -34,7 +34,7 @@ router.get('/:username', authentication.isAuthenticated, function (req, res, nex
           res.send({success: false, message: err.message});
         } else {
             data.registrations = registrations;
-            // get either final schedules or pending schedules related to ther user
+            // get either final schedules or pending schedules related to their user
             Schedule.getSchedules(user, function (err, schedules) {
                 if (err) {
                     res.send({success: false, message: err.message});

@@ -84,39 +84,50 @@ ScheduleSchema.statics.getSchedules = function (user, callback) {
 ScheduleSchema.statics.getMatches = function (callback) {
 
     Registration.getUnmatchedRegistrations(function (err, registrations) {
-        console.log('unmatched registrations', registrations.length);
-        registrations = registrations.map(function (registration) {
-            registration = registration.toJSON();
-            registration['earliestStartTime'] = dateFormat(registration.earliestStartTime, "yyyy-mm-dd");
-            return registration;
-        });
+        if (registrations.length < 2){
+            console.log("no current registrations to match")
+        }
+        else {
+            console.log('unmatched registrations', registrations.length);
+            registrations = registrations.map(function (registration) {
+                registration = registration.toJSON();
+                registration['earliestStartTime'] = dateFormat(registration.earliestStartTime, "yyyy-mm-dd");
+                return registration;
+            });
+            console.log("Passed some stuff")
+            //console.log(process.env, "process.env")
+            var options = {
+                mode: 'json',
+                //pythonPath: '.env/bin/python2.7',
+                //pythonPath: process.env.PWD,
+                pythonPath: process.env.VIRTUAL_ENV + '/bin/python2.7',
+                scriptPath: './scheduler/',
+                args: [JSON.stringify(registrations)]
+            };
+            console.log(registrations)
+            console.log(JSON.stringify(registrations), 'registrations')
 
-        var options = {
-            mode: 'json',
-            pythonPath: '.env/bin/python2.7',
-            scriptPath: './scheduler/',
-            args: [JSON.stringify(registrations)]
-        };
-
-        PythonShell.run('main.py', options, function (err, outputs) {
-            if (err) {
-                throw err;
-            }
-            console.log('got matches');
-            var matches = outputs[0];
-            if (matches.length == 0) {
-                callback(null, []);
-            } else {
-                Schedule.saveSchedules(matches, function (err, schedules) {
-                    console.log('saving schedules...');
-                    if (err) {
-                        callback({success: false, message: err.message});
-                    } else {
-                        callback(null, schedules);
-                    }
-                });
-            }
-        });
+            PythonShell.run('main.py', options, function (err, outputs) {
+                if (err) {
+                    console.log("Something is broken")
+                    throw err;
+                }
+                console.log('got matches');
+                var matches = outputs[0];
+                if (matches.length == 0) {
+                    callback(null, []);
+                } else {
+                    Schedule.saveSchedules(matches, function (err, schedules) {
+                        console.log('saving schedules...');
+                        if (err) {
+                            callback({success: false, message: err.message});
+                        } else {
+                            callback(null, schedules);
+                        }
+                    });
+                }
+            });
+        }
     });
 };
 

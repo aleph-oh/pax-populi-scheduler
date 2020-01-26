@@ -1,7 +1,7 @@
 """
 Runs one round of scheduling.
 """
-
+print('We did it!')
 from user import User
 from scheduler import Scheduler
 import argparse
@@ -15,6 +15,7 @@ def run_scheduler(registrations):
     Runs the scheduler and prints a json containing a list of schedule objects
     to be written to the database.
     """
+
     # Convert registrations dict to students, tutors
     students = []
     tutors = []
@@ -36,13 +37,13 @@ def run_scheduler(registrations):
             students.append(user)
         if user_type == 'TUTOR':
             tutors.append(user)
-
+        print(students, tutors)
     # Run scheduler
     scheduler = Scheduler(students, tutors)
     schedule_dicts = scheduler.schedule_dicts_for_database()
     # print instead of return because python-shell receives this data from Python stdout
     print json.dumps(schedule_dicts) 
-
+    print "main.py complete!"
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("registrations",
@@ -52,4 +53,5 @@ def main():
     run_scheduler(args.registrations)
 
 if __name__ == '__main__':
+    console.log("started main.py")
     main()

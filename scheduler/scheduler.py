@@ -1,7 +1,7 @@
 import networkx as nx
 
 from match import Match
-
+print ("Started Scheduler")
 class Vertex:
     """Immutable source or sink vertex for max flow. This class was created so
     that instances of it can be used as the source and sink vertices in max
