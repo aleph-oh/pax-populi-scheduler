@@ -17,7 +17,7 @@ var hbsHelpers = require('./javascripts/hbsHelpers.js');
 var Schedule = require('./models/schedule.js');
 var Enum = require('./models/enum.js');
 var User = require('./models/user.js');
-console.log(allowedProtoProperties)
+
 // database setup
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/paxpopulidb');
