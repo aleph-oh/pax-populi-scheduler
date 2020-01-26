@@ -220,7 +220,7 @@ router.put('/approve/:username/:requestToken', [authentication.isAuthenticated, 
                 return res.json(data);
 	        }
 	        else{
-                data.message = '{} {}\'s account has been approved. He/She has been notified.'.format(user.firstName, user.lastName);   
+                data.message = '{} {}\'s account has been approved. They have been notified.'.format(user.firstName, user.lastName);
     	        data.success = true;
     	        data.redirect = '/';
     	        res.json(data);
@@ -248,7 +248,7 @@ router.put('/reject/:username/:requestToken', [authentication.isAuthenticated, a
                 return res.json(data);
 	        }
             else{
-    	        data.message = '{} {}\'s account has been rejected. He/She has been notified.'.format(user.firstName, user.lastName);   
+    	        data.message = '{} {}\'s account has been rejected. They have been notified.'.format(user.firstName, user.lastName);
     	        data.success = true;
     	        data.redirect = '/';
     	        res.json(data);
@@ -276,7 +276,7 @@ router.put('/waitlist/:username/:requestToken', [authentication.isAuthenticated,
                 return res.json(data);
 	        }
             else{
-    	        data.message = '{} {}\'s account has been moved to waitlist. He/She has been notified'.format(user.firstName, user.lastName);
+    	        data.message = '{} {}\'s account has been moved to waitlist. They have been notified'.format(user.firstName, user.lastName);
     	        data.success = true;
     	        data.redirect = '/';
     	        res.json(data);
@@ -304,7 +304,7 @@ router.put('/archive/:username', [authentication.isAuthenticated, authentication
                 return res.json(data);
             }
             else{
-                data.message = '{} {}\'s account has been archived. He/She has been notified'.format(user.firstName, user.lastName);
+                data.message = '{} {}\'s account has been archived. They have been notified'.format(user.firstName, user.lastName);
                 data.success = true;
                 data.redirect = '/settings';
                 res.json(data);

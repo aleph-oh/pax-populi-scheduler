@@ -19,7 +19,7 @@ var Enums = function() {
     }
 
     that.genders = function () {
-    	return ["Male","Female"];
+    	return ["Male","Female", "Other"];
     }
 
     that.confirmation = function () {
@@ -59,6 +59,9 @@ var Enums = function() {
         return ["International Relations or Global Studies", "Economics",
                   "Management", "English", "Sociology", "Not Applicable",
                   "Other",]
+    }
+    that.timezones = function () {
+        return("EST, CST, Afghanistan,")
     }
 
     that.interests = function () {
