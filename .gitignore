@@ -7,7 +7,6 @@ public/vendor
 *.pyc
 scheduler/.coverage
 scheduler/htmlcov/*
-.env/*
 runthepython.sh
 .idea/dictionaries/jay.xml
 .idea/jsLibraryMappings.xml
