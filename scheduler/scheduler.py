@@ -6,12 +6,12 @@ from match import Match
 class Vertex:
     """Immutable source or sink vertex for max flow. This class was created so
     that instances of it can be used as the source and sink vertices in max
-    flow instead of the strings 'SOURCE' and 'SINK', one of which could be
+    flow instead of the strings "SOURCE" and "SINK", one of which could be
     equal to a student ID or tutor ID.
     """
 
     def __init__(self, vertex_type):
-        if vertex_type not in ['SOURCE', 'SINK']:
+        if vertex_type not in ["SOURCE", "SINK"]:
             raise ValueError('vertex_type must be "SOURCE" or "SINK"')
 
 class Scheduler:
@@ -21,31 +21,31 @@ class Scheduler:
         """
         Args:
             students: A list of student User objects to be matched. The
-                user_id's of the union of students and tutors must be distinct.
-            tutors: A list of tutor User objects to be matched. The user_id's
+                user_id"s of the union of students and tutors must be distinct.
+            tutors: A list of tutor User objects to be matched. The user_id"s
                 of the union of students and tutors must be distinct.
             weeks_per_course: A positive integer representing the number of
                 occurrences of the course, assuming the course meets once per
                 week.
         """
         for student in students:
-            if student.user_type != 'STUDENT':
-                raise ValueError('Every user in students must have the user_type \'STUDENT\'')
+            if student.user_type != "STUDENT":
+                raise ValueError("Every user in students must have the user_type \"STUDENT\"")
         for tutor in tutors:
-            if tutor.user_type != 'TUTOR':
-                raise ValueError('Every user in tutors must have the user_type \'TUTOR\'')
+            if tutor.user_type != "TUTOR":
+                raise ValueError("Every user in tutors must have the user_type \"TUTOR\"")
         self.student_ids = [student.user_id for student in students]
         self.tutor_ids = [tutor.user_id for tutor in tutors]
         if len(set(self.student_ids).union(set(self.tutor_ids))) != len(self.student_ids) + len(self.tutor_ids):
-            raise ValueError('The user_id\'s in the union of students and tutors must be distinct')
+            raise ValueError("The user_id\"s in the union of students and tutors must be distinct")
         if weeks_per_course <= 0:
-            raise ValueError('weeks_per_course must be a positive integer')
+            raise ValueError("weeks_per_course must be a positive integer")
         self.students = students
         self.tutors = tutors
         self.tutor_id_to_tutor = dict(zip(self.tutor_ids, self.tutors))
         self.weeks_per_course = weeks_per_course
-        self.source = Vertex('SOURCE')
-        self.sink = Vertex('SINK')
+        self.source = Vertex("SOURCE")
+        self.sink = Vertex("SINK")
 
     def get_max_flow_network(self):
         # Add nodes
@@ -83,44 +83,44 @@ class Scheduler:
     
     def matches_to_schedule_dict(self, matches):
         if len(matches) == 0:
-            raise ValueError('matches cannot be empty')
+            raise ValueError("matches cannot be empty")
         match_dicts = [match.to_dict() for match in matches]
         first_match_dict = match_dicts[0]
-        if not all(match_dict['studentID'] == first_match_dict['studentID']
+        if not all(match_dict["studentID"] == first_match_dict["studentID"]
                    for match_dict in match_dicts):
-            raise ValueError('Every match in matches must have the same student ID')
-        if not all(match_dict['tutorID'] == first_match_dict['tutorID']
+            raise ValueError("Every match in matches must have the same student ID")
+        if not all(match_dict["tutorID"] == first_match_dict["tutorID"]
                    for match_dict in match_dicts):
-            raise ValueError('Every match in matches must have the same tutor ID')
-        if not all(match_dict['studentRegID'] == first_match_dict['studentRegID']
+            raise ValueError("Every match in matches must have the same tutor ID")
+        if not all(match_dict["studentRegID"] == first_match_dict["studentRegID"]
                    for match_dict in match_dicts):
-            raise ValueError('Every match in matches must have the same student registration ID')
-        if not all(match_dict['tutorRegID'] == first_match_dict['tutorRegID']
+            raise ValueError("Every match in matches must have the same student registration ID")
+        if not all(match_dict["tutorRegID"] == first_match_dict["tutorRegID"]
                    for match_dict in match_dicts):
-            raise ValueError('Every match in matches must have the same tutor registration ID')
-        if not all(match_dict['possibleCourses'] == first_match_dict['possibleCourses']
+            raise ValueError("Every match in matches must have the same tutor registration ID")
+        if not all(match_dict["possibleCourses"] == first_match_dict["possibleCourses"]
                    for match_dict in match_dicts):
-            raise ValueError('Every match in matches must have the same possible courses')
-        student_id = first_match_dict['studentID']
-        tutor_id = first_match_dict['tutorID']
-        student_reg_id = first_match_dict['studentRegID']
-        tutor_reg_id = first_match_dict['tutorRegID']
-        possible_courses = first_match_dict['possibleCourses']
+            raise ValueError("Every match in matches must have the same possible courses")
+        student_id = first_match_dict["studentID"]
+        tutor_id = first_match_dict["tutorID"]
+        student_reg_id = first_match_dict["studentRegID"]
+        tutor_reg_id = first_match_dict["tutorRegID"]
+        possible_courses = first_match_dict["possibleCourses"]
         student_possible_schedules = []
         tutor_possible_schedules = []
         UTC_possible_schedules = []
         for match_dict in match_dicts:
-            student_possible_schedules.append(match_dict['studentClassSchedule'])
-            tutor_possible_schedules.append(match_dict['tutorClassSchedule'])
-            UTC_possible_schedules.append(match_dict['UTCClassSchedule'])
-        schedule_dict = {'studentID': student_id,
-                         'tutorID': tutor_id,
-                         'studentRegID': student_reg_id,
-                         'tutorRegID': tutor_reg_id,
-                         'possibleCourses': possible_courses,
-                         'studentPossibleSchedules': student_possible_schedules,
-                         'tutorPossibleSchedules': tutor_possible_schedules,
-                         'UTCPossibleSchedules': UTC_possible_schedules}
+            student_possible_schedules.append(match_dict["studentClassSchedule"])
+            tutor_possible_schedules.append(match_dict["tutorClassSchedule"])
+            UTC_possible_schedules.append(match_dict["UTCClassSchedule"])
+        schedule_dict = {"studentID": student_id,
+                         "tutorID": tutor_id,
+                         "studentRegID": student_reg_id,
+                         "tutorRegID": tutor_reg_id,
+                         "possibleCourses": possible_courses,
+                         "studentPossibleSchedules": student_possible_schedules,
+                         "tutorPossibleSchedules": tutor_possible_schedules,
+                         "UTCPossibleSchedules": UTC_possible_schedules}
         return schedule_dict
 
     def schedule_dicts_for_database(self):

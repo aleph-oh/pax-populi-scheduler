@@ -42,12 +42,12 @@
 			    <tr><th>Options</th><td>
 			    	<a class='hideLink' data-toggle="collapse" data-target="#scheduleOptions-{{_id}}">View Possible Schedules</a>
 			    	<div id='scheduleOptions-{{_id}}' class='collapse'> 
-				    	{{#eachFormatedSchedule studentPossibleSchedules tutorPossibleSchedules}}
+				    	{{#eachFormattedSchedule studentPossibleSchedules tutorPossibleSchedules}}
 		  					<div class="radio">
 		  						<label><input required type="radio" name="scheduleRadio">Student Schedule: <ul class='no-bullets'>{{#each studentSchedule}}<li>{{this}}</li>{{/each}}</ul>
 		  						Tutor Schedule: <ul class='no-bullets'>{{#each tutorSchedule}}<li>{{this}}</li>{{/each}}</ul></label>
 							</div>
-						{{/eachFormatedSchedule}}
+						{{/eachFormattedSchedule}}
 					</div>
 			    </td>
 			  </tbody>

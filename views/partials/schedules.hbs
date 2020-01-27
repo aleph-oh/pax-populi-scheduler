@@ -45,9 +45,9 @@
 			    	{{/if}}
 			    <tr><th>Student Schedule</th><td>{{summarizeSchedule studentClassSchedule}}</td>
 			    <tr><th>Tutor Schedule</th><td>
-			    	{{#eachFormatedTutorSchedule tutorClassSchedule}}
+			    	{{#eachFormattedTutorSchedule tutorClassSchedule}}
 			    		{{this}}<br>
-			    	{{/eachFormatedTutorSchedule}}
+			    	{{/eachFormattedTutorSchedule}}
 			    </td>
 			  </tbody>
 			  </table>
@@ -167,9 +167,9 @@
 				{{/if}}
 			<td>{{summarizeSchedule studentClassSchedule}}</td>
 			<td>
-				{{#eachFormatedTutorSchedule tutorClassSchedule}}
+				{{#eachFormattedTutorSchedule tutorClassSchedule}}
 					{{this}}<br>
-				{{/eachFormatedTutorSchedule}}
+				{{/eachFormattedTutorSchedule}}
 			</td>
 			<td>
 				{{firstDateTimeUTC.[0]}}

@@ -133,7 +133,7 @@ var HbsHelpers = function() {
     that.summarizeSchedule = function (schedule) {
 
         var startDate, endDate, meetingTime;
-        var formatedSchedule = [];
+        var formattedSchedule = [];
 
         schedule.forEach(function (timeBlock) {
             var date = timeBlock[0];
@@ -146,7 +146,7 @@ var HbsHelpers = function() {
                 endDate = date;
             } else {
                 var day = that.weekday[new Date(startDate).getDay()];
-                formatedSchedule.push('{} {} ({} - {})'.format(day, meetingTime, startDate, endDate));
+                formattedSchedule.push('{} {} ({} - {})'.format(day, meetingTime, startDate, endDate));
                 startDate = date;
                 meetingTime = time;
                 endDate = date;
@@ -154,8 +154,8 @@ var HbsHelpers = function() {
             }
         });
         var day = that.weekday[new Date(startDate).getDay()];
-        formatedSchedule.push('{} {} ({} - {})'.format(day, meetingTime, startDate, endDate));
-        return formatedSchedule;
+        formattedSchedule.push('{} {} ({} - {})'.format(day, meetingTime, startDate, endDate));
+        return formattedSchedule;
     }
 
     /**
@@ -164,19 +164,19 @@ var HbsHelpers = function() {
     *                  each is an array of date, time arrays of the form [yyyy-mm-dd, hh:mm]
     */
     that.formatSchedules = function (studentSchedules, tutorSchedules) {
-        var formatedStudentSchedules = studentSchedules.map(function (schedule) {
+        var formattedStudentSchedules = studentSchedules.map(function (schedule) {
             return that.summarizeSchedule(schedule);
         });
-        var formatedTutorSchedules = tutorSchedules.map(function (schedule) {
+        var formattedTutorSchedules = tutorSchedules.map(function (schedule) {
             return that.summarizeSchedule(schedule);
         });
 
-        var formatedSchedules = [];
-        for (var i=0; i < formatedStudentSchedules.length; i++) {
-            formatedSchedules.push({studentSchedule: formatedStudentSchedules[i],
-                                    tutorSchedule: formatedTutorSchedules[i]});
+        var formattedSchedules = [];
+        for (var i=0; i < formattedStudentSchedules.length; i++) {
+            formattedSchedules.push({studentSchedule: formattedStudentSchedules[i],
+                                    tutorSchedule: formattedTutorSchedules[i]});
         }
-        return formatedSchedules;
+        return formattedSchedules;
     }
 
     /**
@@ -184,7 +184,7 @@ var HbsHelpers = function() {
     * @param {{Array}} studentSchedules, tutorSchedules - an array of different set of schedules,
     *                  each is an array of date, time arrays of the form [yyyy-mm-dd, hh:mm]
     */
-    that.eachFormatedSchedule = function (studentSchedules, tutorSchedules, options) {
+    that.eachFormattedSchedule = function (studentSchedules, tutorSchedules, options) {
         var ret = "";
         context = that.formatSchedules(studentSchedules, tutorSchedules);
         for(var i=0, j=context.length; i<j; i++) {
@@ -198,7 +198,7 @@ var HbsHelpers = function() {
     * @param {{Array}} tutorSchedules - an array of different set of schedules,
     *                  each is an array of date, time arrays of the form [yyyy-mm-dd, hh:mm]
     */
-    that.eachFormatedTutorSchedule = function (tutorSchedules, options) {
+    that.eachFormattedTutorSchedule = function (tutorSchedules, options) {
         var ret = "";
         context = that.summarizeSchedule(tutorSchedules);
         for(var i=0, j=context.length; i<j; i++) {

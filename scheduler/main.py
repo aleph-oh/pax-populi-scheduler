@@ -47,8 +47,9 @@ def run_scheduler(registrations):
     scheduler = Scheduler(students, tutors)
     schedule_dicts = scheduler.schedule_dicts_for_database()
     # print instead of return because python-shell receives this data from Python stdout
-    print (json.dumps(schedule_dicts), "json.dumps")
-    print "main.py complete!"
+    print json.dumps(schedule_dicts)
+    #print(json.dumps(schedule_dicts), "json.dumps")
+    #print "main.py complete!"
 def main():
     #print('We have reached main')
     parser = argparse.ArgumentParser()
