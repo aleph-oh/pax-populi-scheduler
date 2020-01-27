@@ -84,7 +84,9 @@ ScheduleSchema.statics.getSchedules = function (user, callback) {
 ScheduleSchema.statics.getMatches = function (callback) {
 
     Registration.getUnmatchedRegistrations(function (err, registrations) {
-        if (registrations.length < 2){
+        console.log("here are registrations")
+	console.log(registrations, registrations.length)
+	if (registrations.length < 2){
             console.log("no current registrations to match")
             callback("There are no registrations to match currently")
         }
