@@ -77,6 +77,7 @@ class Match:
                                  for student_dt in student_course_schedule]
         UTC_course_schedule = [student_dt.astimezone(pytz.utc)
                                for student_dt in student_course_schedule]
+        print(student_course_schedule, tutor_course_schedule, UTC_course_schedule)
         return (student_course_schedule, tutor_course_schedule, UTC_course_schedule)
 
     def daylight_saving_valid(self):

@@ -86,6 +86,7 @@ ScheduleSchema.statics.getMatches = function (callback) {
     Registration.getUnmatchedRegistrations(function (err, registrations) {
         if (registrations.length < 2){
             console.log("no current registrations to match")
+            callback("There are no registrations to match currently")
         }
         else {
             console.log('unmatched registrations', registrations.length);
@@ -104,17 +105,23 @@ ScheduleSchema.statics.getMatches = function (callback) {
                 scriptPath: './scheduler/',
                 args: [JSON.stringify(registrations)]
             };
-            console.log(registrations)
-            console.log(JSON.stringify(registrations), 'registrations')
+            //console.log(registrations)
+            //console.log(JSON.stringify(registrations), 'registrations', typeof(JSON.stringify(registrations)))
+            // PythonShell.on('message', function (message) {
+            //     // received a message sent from the Python script (a simple "print" statement)
+            //     console.log(message);
+            // });
 
             PythonShell.run('main.py', options, function (err, outputs) {
+                console.log("Let's try running python")
                 if (err) {
                     console.log("Something is broken")
                     throw err;
                 }
                 console.log('got matches');
                 var matches = outputs[0];
-                if (matches.length == 0) {
+                if (matches.length === 0) {
+                    console.log("No matches")
                     callback(null, []);
                 } else {
                     Schedule.saveSchedules(matches, function (err, schedules) {

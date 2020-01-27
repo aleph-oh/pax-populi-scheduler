@@ -34,8 +34,8 @@ class User:
         """
         if user_type not in ['STUDENT', 'TUTOR']:
             raise ValueError('user_type must be \'STUDENT\' or \'TUTOR\'')
-        if gender not in ['MALE', 'FEMALE']:
-            raise ValueError('gender must be \'MALE\' or \'FEMALE\'')
+        if gender not in ['MALE', 'FEMALE', 'OTHER', 'PREFER NOT TO ANSWER']:
+            raise ValueError('gender must be \'MALE\' or \'FEMALE\' \'OTHER\' or \'PREFER NOT TO ANSWER\'')
         if gender_preference not in ['MALE', 'FEMALE', 'NONE']:
             raise ValueError('gender_preference must be \'MALE\', \'FEMALE\', or \'NONE\'')
         if tz_str not in pytz.all_timezones_set:
