@@ -4,7 +4,6 @@ $(document).ready(function () {
     var now = new Date(Date.now());
     var timeNow = now.toISOString().substring(0, 10);
     $("#earliestStartTime").attr("min", timeNow);
-
 });
     
 

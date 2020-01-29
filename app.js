@@ -45,8 +45,8 @@ app.engine('.hbs', exphbs({extname: '.hbs',
                                       equalStrings: hbsHelpers.equalStrings,
                                       summarizeSchedule: hbsHelpers.summarizeSchedule,
                                       formatSchedules: hbsHelpers.formatSchedules,
-                                      eachFormatedSchedule: hbsHelpers.eachFormatedSchedule,
-                                      eachFormatedTutorSchedule: hbsHelpers.eachFormatedTutorSchedule,
+                                      eachFormattedSchedule: hbsHelpers.eachFormattedSchedule,
+                                      eachFormattedTutorSchedule: hbsHelpers.eachFormattedTutorSchedule,
                                       notNotApplicable: hbsHelpers.notNotApplicable}
                           }));
 app.set('view engine', 'hbs');
@@ -116,7 +116,7 @@ User.initializeSuperAdmin(function (err, superAdmin) {
         console.log('ensured that super admin account exist');
     }
 });
-
+console.log('error testing')
 // error handlers
 
 // development error handler

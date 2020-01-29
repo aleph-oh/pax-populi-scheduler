@@ -33,6 +33,7 @@ $(document).ready(function(){
         var tutorMajor = $("#major-register-box").val();
         var country = $("select[name=country]").val();
         var region = $("select[name=region]").val();
+        var timezone = $("#timezone").val();
         var interests = $("select[name=interests]").val();
         var inCharge = $("input[name=in-charge]:checked").val();
         var signature = $("#signature-register-box").val();

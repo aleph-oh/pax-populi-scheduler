@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var validators = require("mongoose-validators");
+var validators = require("mongoose-validator");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var async = require('async');
 var User = require('../models/user.js');
@@ -101,7 +101,7 @@ RegistrationSchema.statics.findRegistration = function (regId, user, callback){
         }
         else{
             if (registration === null){
-                callback(new Error("This registration doesn't belong this logged in user."));
+                callback(new Error("This registration doesn't belong to this logged in user."));
             }
             else{
                 callback(null, registration);
@@ -210,7 +210,7 @@ RegistrationSchema.statics.markAsUnmatched = function (registrationIds, callback
  * @param {Function} callback - The function to execute after the unmatched registrations are found.
  */
 RegistrationSchema.statics.getUnmatchedRegistrations = function (callback) {
-    Registration.find({isMatched: false, earliestStartTime: {"$gte": new Date()}}).populate('user').exec(function (err, registrations) {
+    Registration.find({isMatched: false}).populate('user').exec(function (err, registrations) {
         if (err) {
             callback({success: false, message: err.message});
         } else {

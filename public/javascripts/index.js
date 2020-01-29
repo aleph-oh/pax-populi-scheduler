@@ -5,6 +5,7 @@
  * @param {Boolean} isModal  if true, adds the message to modal-messages instead of messages
  * @param {Boolean} clearOld if true, clears old messages
  */
+
 var addMessage = function(message, success) {
     $('#messages').empty();
     $('.modal-content').addClass(success ? 'success': 'error');

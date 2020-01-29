@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var validators = require("mongoose-validators");
+var validators = require("mongoose-validator");
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var async = require('async');
 var PythonShell = require('python-shell');
@@ -84,39 +84,59 @@ ScheduleSchema.statics.getSchedules = function (user, callback) {
 ScheduleSchema.statics.getMatches = function (callback) {
 
     Registration.getUnmatchedRegistrations(function (err, registrations) {
-        console.log('unmatched registrations', registrations.length);
-        registrations = registrations.map(function (registration) {
-            registration = registration.toJSON();
-            registration['earliestStartTime'] = dateFormat(registration.earliestStartTime, "yyyy-mm-dd");
-            return registration;
-        });
+        console.log("here are registrations")
+	console.log(registrations, registrations.length)
+	if (registrations.length < 2){
+            console.log("no current registrations to match")
+            callback("There are no registrations to match currently")
+        }
+        else {
+            console.log('unmatched registrations', registrations.length);
+            registrations = registrations.map(function (registration) {
+                registration = registration.toJSON();
+                registration['earliestStartTime'] = dateFormat(registration.earliestStartTime, "yyyy-mm-dd");
+                return registration;
+            });
+            console.log("Passed some stuff")
+            //console.log(process.env, "process.env")
+            var options = {
+                mode: 'json',
+                //pythonPath: '.env/bin/python2.7',
+                //pythonPath: process.env.PWD,
+                pythonPath: process.env.VIRTUAL_ENV + '/bin/python2.7',
+                scriptPath: './scheduler/',
+                args: [JSON.stringify(registrations)]
+            };
+            //console.log(registrations)
+            //console.log(JSON.stringify(registrations), 'registrations', typeof(JSON.stringify(registrations)))
+            // PythonShell.on('message', function (message) {
+            //     // received a message sent from the Python script (a simple "print" statement)
+            //     console.log(message);
+            // });
 
-        var options = {
-            mode: 'json',
-            pythonPath: '.env/bin/python2.7',
-            scriptPath: './scheduler/',
-            args: [JSON.stringify(registrations)]
-        };
-
-        PythonShell.run('main.py', options, function (err, outputs) {
-            if (err) {
-                throw err;
-            }
-            console.log('got matches');
-            var matches = outputs[0];
-            if (matches.length == 0) {
-                callback(null, []);
-            } else {
-                Schedule.saveSchedules(matches, function (err, schedules) {
-                    console.log('saving schedules...');
-                    if (err) {
-                        callback({success: false, message: err.message});
-                    } else {
-                        callback(null, schedules);
-                    }
-                });
-            }
-        });
+            PythonShell.run('main.py', options, function (err, outputs) {
+                console.log("Let's try running python")
+                if (err) {
+                    console.log("Something is broken")
+                    throw err;
+                }
+                console.log('got matches');
+                var matches = outputs[0];
+                if (matches.length === 0) {
+                    console.log("No matches")
+                    callback(null, []);
+                } else {
+                    Schedule.saveSchedules(matches, function (err, schedules) {
+                        console.log('saving schedules...');
+                        if (err) {
+                            callback({success: false, message: err.message});
+                        } else {
+                            callback(null, schedules);
+                        }
+                    });
+                }
+            });
+        }
     });
 };
 

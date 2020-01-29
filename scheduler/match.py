@@ -125,12 +125,13 @@ class Match:
         student_schedule_strings = map(dt_to_str, self.student_course_schedule)
         tutor_schedule_strings = map(dt_to_str, self.tutor_course_schedule)
         UTC_schedule_strings = map(dt_to_str, self.UTC_course_schedule)
-        match_dict = {'studentID': self.student.user_id,
-                      'tutorID': self.tutor.user_id,
-                      'studentRegID': self.student.reg_id,
-                      'tutorRegID': self.tutor.reg_id,
-                      'possibleCourses': self.shared_courses,
-                      'studentClassSchedule': student_schedule_strings,
-                      'tutorClassSchedule': tutor_schedule_strings,
-                      'UTCClassSchedule': UTC_schedule_strings}
+        match_dict = {"studentID": self.student.user_id,
+                      "tutorID": self.tutor.user_id,
+                      "studentRegID": self.student.reg_id,
+                      "tutorRegID": self.tutor.reg_id,
+                      "possibleCourses": self.shared_courses,
+                      "studentClassSchedule": student_schedule_strings,
+                      "tutorClassSchedule": tutor_schedule_strings,
+                      "UTCClassSchedule": UTC_schedule_strings}
+        #print match_dict
         return match_dict

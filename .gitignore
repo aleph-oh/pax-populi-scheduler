@@ -1,6 +1,4 @@
-node_modules/*
 npm-debug.log
-javascripts/config.js
 public/availability.html
 public/javascripts/vendor/bower_components
 public/vendor
@@ -9,7 +7,9 @@ public/vendor
 *.pyc
 scheduler/.coverage
 scheduler/htmlcov/*
-.env/*
 runthepython.sh
 .idea/*
+.env/*
 public/.idea/workspace.xml
+node_modules/*
+!node_modules/handlebars/*
