@@ -8,13 +8,8 @@ public/vendor
 scheduler/.coverage
 scheduler/htmlcov/*
 runthepython.sh
-.idea/dictionaries/jay.xml
-.idea/jsLibraryMappings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/pax-populi-scheduler.iml
-.idea/vcs.xml
-.idea/workspace.xml
+.idea/*
+.env/*
 public/.idea/workspace.xml
 node_modules/*
 !node_modules/handlebars/*
