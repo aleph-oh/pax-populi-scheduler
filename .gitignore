@@ -11,3 +11,5 @@ scheduler/.coverage
 scheduler/htmlcov/*
 .env/*
 runthepython.sh
+.idea/*
+public/.idea/workspace.xml
