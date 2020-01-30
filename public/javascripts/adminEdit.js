@@ -28,16 +28,28 @@ function userDisplay(username) {
         });
 
     });
-};
+}
 
 /**Changes the values in registrations which are not directly schedule-related.
- *
  * @param username: the username of the user to be changed
- * @param newVals: the list of new values from the administrator
+ * @param field: the field of the database to edit
+ * @param newVal: the new values from the administrator
  */
-function userUpdate(username, newVals) {
+function userUpdate(username, field, newVal) {
     MongoClient.connect(url, {useNewUrlParser: true}, (err, client) => {
 
-});
+        const query = { username: username};
+        const toChange = {field: newVal};
+        const db = client.db("paxpopulidb");
+
+        db.collection("registrations").updateOne(query, toChange, function(err) {
+            if (err) {
+                console.log(err.message)
+            }
+            console.log("1 document changed.")
+        });
+
+})}
 
 module.exports = userDisplay();
+//module.exports = userUpdate();

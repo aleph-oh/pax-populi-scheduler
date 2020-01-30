@@ -118,9 +118,6 @@ User.initializeSuperAdmin(function (err, superAdmin) {
     }
 });
 
-AdminEdit.userDisplay()
-//tries to display all users
-
 console.log('error testing')
 // error handlers
 
