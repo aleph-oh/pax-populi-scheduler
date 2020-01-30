@@ -29,8 +29,8 @@
     <input id='requestToken-{{_id}}' type="hidden" value="{{requestToken}}"></input>
     <input id='csrf' type="hidden" name="_csrf" value="{{csrfToken}}">
     <center>
-      <button id='registration-button-{{_id}}' class='btn btn-info btn-hg registration-button'>Registration Info</button>
-      <button id='schedule-button-{{_id}}' class='btn btn-info btn-hg schedule-button'>View Schedule</button>
+      <button id='registration-button-{{_id}}' class='btn btn-info btn-hg registration-button'>View/Edit Registration</button>
+      <button id='schedule-button-{{_id}}' class='btn btn-info btn-hg schedule-button'>View/Edit Schedule</button>
       {{#ifNot archived}}
         <button id='archive-button-{{_id}}' class='btn btn-danger btn-hg archive-button'>Deactivate</button>
       {{else}}
