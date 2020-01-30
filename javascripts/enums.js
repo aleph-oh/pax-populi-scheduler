@@ -19,7 +19,7 @@ var Enums = function() {
     }
 
     that.genders = function () {
-    	return ["Male","Female","Other","Prefer not to answer"];
+    	return ["Male","Female","Other"];
     }
 
     that.confirmation = function () {

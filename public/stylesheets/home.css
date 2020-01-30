@@ -22,11 +22,16 @@
 }
 
 #login-button {
-	float: left;
+	float: right;
 	width: 45%;
 }
 
 #signup-button {
+	float: left;
+	width: 45%;
+}
+
+#forgot-password-button {
 	float: right;
 	width: 45%;
 }
