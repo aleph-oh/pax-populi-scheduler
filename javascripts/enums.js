@@ -44,8 +44,8 @@ const Enums = function() {
                         "Middle School: 6th through 8th Grade", 
                         "9th Grade", "10th Grade", "11th Grade", 
                         "12th Grade", "Trade School"]
-    values.higherLevels = ["University Freshman", "University Sophomore",
-                        "University Junior", "University Senior", 
+    values.higherLevels = ["University First Year Student", "University Second Year Student",
+                        "University Third Year Student", "University Fourth Year Student", 
                         "Master's Degree", "Doctoral Degree"];
 
     values.studentEducationLevels = function () {
