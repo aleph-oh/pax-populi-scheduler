@@ -15,3 +15,7 @@ node_modules/*
 !node_modules/handlebars/*
 node_modules/bcrypt/package.json
 node_modules/bcrypt/lib/binding/bcrypt_lib.node
+public/.idea/misc.xml
+public/.idea/modules.xml
+public/.idea/public.iml
+public/.idea/vcs.xml
