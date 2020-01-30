@@ -21,6 +21,7 @@ var UserSchema = mongoose.Schema({
     onHold: {type: Boolean, default: false},
     archived: {type: Boolean, default: false},
     role: {type: String, enum: enums.userTypes(), required: true},
+    isRegularUser: {type: Boolean, default: false},
     email: {type: String, required: true},
     alternativeEmail: {type: String},
     firstName: {type: String, required: true},
@@ -123,7 +124,7 @@ UserSchema.statics.initializeSuperAdmin = function (callback) {
                                     lastName: lastName,
                                     phoneNumber: phoneNumber,
                                     verified: true,
-                                    approved: true}
+                                    approved: true};
                     that.create(userJSON, function (err, superAdmin) {
                         if (err) {
                             console.log(err);
