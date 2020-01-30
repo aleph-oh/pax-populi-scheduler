@@ -22,3 +22,4 @@ public/.idea/vcs.xml
 models/.#user.js
 models/.#user.js
 models/.#user.js
+node_modules/bcrypt/lib/binding/bcrypt_lib.node
