@@ -26,12 +26,6 @@ $(document).ready(function(){
             $("#emailErrors").append("<p>Please use a non .edu email address.</p>");
         }
 
-        if (notAllowedPattern.test(email)) {
-            validForm.email = false;
-            $("#altEmailErrors").empty();
-            $('#altEmailErrors').append('<p>Email contains disallowed special characters.</p>');
-        }
-
 
         var allValid = true;
         // console.log(validForm);
