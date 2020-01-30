@@ -5,6 +5,7 @@ $(document).ready(function(){
 
     //checks for some validation on required fields. Will not allow form to be submitted if any of these conditions aren't met.
     $("#register-button").click(function(){
+        console.log("Hello");
 
         var notAllowedPattern = new RegExp (JSON.parse($("#notAllowedRegex").val()));
 
