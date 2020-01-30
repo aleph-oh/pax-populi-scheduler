@@ -5,6 +5,7 @@ $(document).ready(function(){
 
     //checks for some validation on required fields. Will not allow form to be submitted if any of these conditions aren't met.
     $("#reset-password-button").click(function(){
+        console.log("Hello");
 
         var notAllowedPattern = new RegExp (JSON.parse($("#notAllowedRegex").val()));
 
@@ -62,7 +63,6 @@ $(document).ready(function(){
             $("#emailErrors").append("<p>Please use a non .edu email address.</p>");
             $("#email-register-box").css({"border-color":"red"});
         }
-
 
         else{
             $("#emailErrors").empty();
