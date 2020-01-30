@@ -327,7 +327,7 @@ router.post('/signup', parseForm, csrfProtection, function(req, res, next) {
             console.log('userJSON', userJSON);
             User.signUp(userJSON, req.devMode, function (err, user) {
                 if (err) {
-                    data.mesage = err.message;
+                    data.message = err.message;
                     res.render('home', data);
                 } else {
                     data.message = 'Sign up successful! We have sent you a verification email. '
