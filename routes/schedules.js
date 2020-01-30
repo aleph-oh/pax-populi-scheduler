@@ -19,8 +19,12 @@ router.put('/match', [authentication.isAuthenticated, authentication.isAdministr
 			res.send({success: false, message: err.message});
 		} else {
 			var numMatches = matches.length;
-			var message = 'Successfully generated ' +  numMatches + ' new ';
-			message += numMatches > 1 ? 'matches!': 'match!';
+			if (numMatches === 0) {
+				var message = "There are no matches to make."
+			}else {
+				var message = 'Successfully generated ' + numMatches + ' new ';
+				message += numMatches > 1 ? 'matches!' : 'match!';
+			}
 			res.send({success: true, message: message, redirect: '/settings'});
 		}
 	});

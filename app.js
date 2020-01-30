@@ -17,6 +17,7 @@ var hbsHelpers = require('./javascripts/hbsHelpers.js');
 var Schedule = require('./models/schedule.js');
 var Enum = require('./models/enum.js');
 var User = require('./models/user.js');
+const AdminEdit = require('./public/javascripts/adminEdit.js');
 
 // database setup
 var mongoose = require('mongoose');
@@ -97,7 +98,7 @@ app.use(function(req, res, next) {
 });
 
 
-// lauch the job of running matching algorithm every week
+// launch the job of running matching algorithm every week
 Schedule.automateMatch();
 // initialize enums
 Enum.initialize(function (err, enums) {
@@ -116,6 +117,10 @@ User.initializeSuperAdmin(function (err, superAdmin) {
         console.log('ensured that super admin account exist');
     }
 });
+
+AdminEdit.userDisplay()
+//tries to display all users
+
 console.log('error testing')
 // error handlers
 
@@ -140,5 +145,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
 
 module.exports = app; //keep at bottom of the file
