@@ -60,9 +60,6 @@ var Enums = function() {
                   "Management", "English", "Sociology", "Not Applicable",
                   "Other",]
     }
-    that.timezones = function () {
-        return("EST, CST, Afghanistan,")
-    }
 
     that.interests = function () {
         return ["English", "Science", "Math", "History", "Current Events", 

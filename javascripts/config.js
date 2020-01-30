@@ -38,6 +38,10 @@ var Config = function() {
  		return 'aecfg2020test@gmail.com';
  	}
 
+ 	that.databaseAddress = function () {
+ 		return 'mongodb://localhost:27017'
+	}
+
  	Object.freeze(that);
  	return that;
  };
