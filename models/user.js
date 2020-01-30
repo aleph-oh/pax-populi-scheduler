@@ -549,6 +549,26 @@ UserSchema.statics.getUser = function(username, callback){
     });
 };
 
+
+/*
+ * Finds a user by their email and returns the whole user object.
+ * @param {String} emailInput - The email of the query user.
+ * @param {Function} callback - The function to execute after the user is found. Callback
+ * function takes 1 parameter: an error when the request is not properly claimed
+ */
+UserSchema.statics.getUserByEmail = function(emailInput, callback){
+    this.findOne({email: emailInput}, function(err,user){
+        if (err) {
+            console.log("Invalid email");
+            callback(new Error("Invalid email."));
+        }
+        else {
+            callback(null, user);
+        }
+    });
+};
+
+
 /*
  * Find approved and verified users whose first name or last name match `name` exactly. If name is an
  * empty string, gets all users.

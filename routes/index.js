@@ -76,17 +76,17 @@ router.post('/login', parseForm, csrfProtection, function(req, res, next) {
             data.isValidAccount = true;
             return res.render('home', data);
         } else if (user.archived) {
-            data.message = 'Your account has been archived by the adminstrators. '
+            data.message = 'Your account has been archived by the administrators. '
                             + 'You no longer have access to this account';
             data.username = user.username
             data.archived = true;
             return res.render('home', data);
         } else if (user.rejected) {
-        	data.message = 'Your account has been rejected by the adminstrators so you do not have '
+        	data.message = 'Your account has been rejected by the administrators so you do not have '
         					+ 'the permission to use this scheduler';
         	return res.render('home', data);
         } else if (!user.approved) {
-        	data.message = 'Your account has not been approved by the adminstrators so you do not have '
+        	data.message = 'Your account has not been approved by the administrators so you do not have '
         					+ 'the permission to use this scheduler yet. Please keep an eye on your ' 
         					+ 'email for further notice.';
         	return res.render('home', data);
@@ -164,7 +164,7 @@ router.put('/verify/:username/:verificationToken', parseForm, csrfProtection, fu
                             data.message = err.message;
                             return res.json({'success': false, message: err.message});
                         } else {
-                            data.message = 'Your account has been verified successfully. Next, the adminstrators will be going through your application, and inform you shortly about their decision.';  
+                            data.message = 'Your account has been verified successfully. Next, the administrators will be going through your application, and inform you shortly about their decision.';
                             data.success = true;
                             data.redirect = '/';
                             res.json(data);
