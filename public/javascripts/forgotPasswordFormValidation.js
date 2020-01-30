@@ -1,6 +1,7 @@
 $(document).ready(function(){
     
     var validForm = {};
+    console.log("Hello");
 
     //checks for some validation on required fields. Will not allow form to be submitted if any of these conditions aren't met.
     $("#reset-password-button").click(function(){
