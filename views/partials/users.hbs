@@ -20,17 +20,17 @@
         </div>
         <div class="modal-body">
           {{> profileTable}}
-        </div>     
+        </div>
       </div>
     </div>
-  </div>    
+  </div>
     <div>
     <input id='username-{{_id}}' type="hidden" value="{{username}}"></input>
     <input id='requestToken-{{_id}}' type="hidden" value="{{requestToken}}"></input>
     <input id='csrf' type="hidden" name="_csrf" value="{{csrfToken}}">
     <center>
       {{#ifNot archived}}
-        <button id='archive-button-{{_id}}' class='btn btn-warning btn-hg archive-button'>Archive</button>
+        <button id='archive-button-{{_id}}' class='btn btn-danger btn-hg archive-button'>Deactivate</button>
       {{else}}
       {{/ifNot}}
     </center>
