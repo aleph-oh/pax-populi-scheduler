@@ -409,7 +409,7 @@ UserSchema.statics.resetPassword = function (email, devMode, callback) {
             return callback({success: false, message: 'Database error'});
         } else if (count === 0) {
             callback({
-                message: 'There is no account associated with this email address.'
+                message: 'There is no account associated with this email address. '
                     + 'Please make sure you have entered your email address correctly.'});
         } else {
             that.getUserByEmail(email, function (err, user){
@@ -470,7 +470,7 @@ UserSchema.statics.sendPasswordResetEmail = function (username, devMode, callbac
             that.findOne({username: username}, function (err, user) {
                 if (err) {
                     callback(err);
-                } else if (user && !user.isVerified) {
+                } else if (user && !user.verified) {
                     callback({message: 'Your account has not yet been verified by an administrator.'});
                 } else if (user && user.onHold) {
                     callback({message: 'Your account is currently on the waitlist.'});
