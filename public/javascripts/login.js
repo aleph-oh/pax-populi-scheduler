@@ -62,9 +62,9 @@ $(document).ready(function () {
             }
 
         }
-        console.log("Got to here!")
+        console.log("Got to here!");
         if (allValid){
-            console.log("Got to here???")
+            console.log("Got to here???");
             $.ajax({
                 url: '/reset/'+username+'/'+resetToken,
                 type: 'PUT',
@@ -98,7 +98,7 @@ $(document).ready(function () {
         if ( pw.legnth < 8 || !(passwordPattern.test(pw))){
             $('#npwErrors').empty();
             $("#npwErrors").append("<p>A valid password contains at least 8 characters, and at least one uppercase character, one lowercase character, a number and one special character.</p>");
-            $("#password-register-box").css({"border-color":"red"});
+            $("#new-password-box").css({"border-color":"red"});
         }
 
         if (pw.length >= 8 && passwordPattern.test(pw)){

@@ -191,6 +191,8 @@ router.get('/reset/:username/:resetToken', function(req, res, next) {
 // Resets password, tells user
 router.put('/reset/:username/:resetToken', parseForm, csrfProtection, function(req, res, next) {
 
+    console.log("Here????");
+
     User.changePassword(req.params.username, req.params.password, function (err, user){
         data = {title: 'Pax Populi Scheduler',
             csrfToken: req.csrfToken()};
