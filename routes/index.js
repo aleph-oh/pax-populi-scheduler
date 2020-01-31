@@ -185,6 +185,7 @@ router.get('/reset/:username/:resetToken', function(req, res, next) {
         resetToken: req.params.resetToken,
         csrfToken: req.csrfToken()};
     Object.assign(data, formDefaults);
+    console.log("Here??");
     res.render('home', data);
 });
 
