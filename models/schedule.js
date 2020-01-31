@@ -88,7 +88,7 @@ ScheduleSchema.statics.getMatches = function (callback) {
 	console.log(registrations, registrations.length)
 	if (registrations.length < 2){
             console.log("no current registrations to match")
-            callback("There are no registrations to match currently")
+            res.send({success: true, message: "There are no registrations to match right now.", redirect: '/settings'});
         }
         else {
             console.log('unmatched registrations', registrations.length);
