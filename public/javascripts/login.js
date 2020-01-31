@@ -28,7 +28,7 @@ $(document).ready(function () {
 
     $('.reset-button').click(function () {
         var validForm = {};
-
+        console.log("Got to here!!!");
         var username = $('#username-' + id).val();
         var resetToken = $('#resetToken-' + id).val();
         var csrf = $('#csrf').val();
