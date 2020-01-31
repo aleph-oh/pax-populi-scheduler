@@ -42,9 +42,9 @@ var Enums = function() {
     that.lowerLevels = ["Primary Education: Kindergarten through 5th Grade", 
                         "Middle School: 6th through 8th Grade", 
                         "9th Grade", "10th Grade", "11th Grade", 
-                        "12th Grade", "Trade School"]
-    that.higherLevels = ["University Freshman", "University Sophomore", 
-                        "University Junior", "University Senior", 
+                        "12th Grade", "Trade School"];
+    that.higherLevels = ["University First Year", "University Second Year",
+                        "University Third Year", "University Fourth Year",
                         "Master's Degree", "Doctoral Degree"];
 
     that.studentEducationLevels = function () {
