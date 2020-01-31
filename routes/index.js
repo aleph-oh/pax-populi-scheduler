@@ -201,8 +201,8 @@ router.put('/reset/:username/:verificationToken', parseForm, csrfProtection, fun
         } else {
             data.success = true;
             data.redirect = '/';
-            data.message = err.message;
-            return res.json(data);
+            data.message = 'Your password has been successfully changed!';
+            res.json(data);
         }
     });
 
