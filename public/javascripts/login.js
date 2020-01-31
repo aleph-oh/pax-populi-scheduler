@@ -26,7 +26,7 @@ $(document).ready(function () {
         });
     });
 
-    $('.reset-button').click(function () {
+    $('#reset-button').click(function () {
         var validForm = {};
         console.log("Got to here!!!");
         var username = $('#username-' + id).val();
