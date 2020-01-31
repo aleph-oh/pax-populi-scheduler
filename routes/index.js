@@ -97,6 +97,8 @@ router.post('/login', parseForm, csrfProtection, function(req, res, next) {
 	                return res.render('home', data);
 	            }
                 var path = req.body.ref_path;
+	            console.log("logged in")
+                console.log(user)
                 res.redirect(path !== '' ? path : '/users/'+ user.username);
 	        });
         }
@@ -192,6 +194,7 @@ router.get('/respond/:username/:requestToken', [authentication.isAuthenticated, 
                         onHold: user.onHold,
                         inPool: user.inPool,
                         role: user.role,
+                        countryInCharge: user.countryInCharge,
                         requestToken: req.params.requestToken,
                         csrfToken: req.csrfToken()};
             Object.assign(data, formDefaults);
@@ -391,11 +394,27 @@ router.get('/manageUsers', [authentication.isAuthenticated, authentication.isAdm
 router.post('/search', [authentication.isAuthenticated, authentication.isAdministrator], parseForm, csrfProtection, function(req, res, next) {
     var keyword = req.body.keyword.trim();
     var user = req.session.passport.user;
+    var type = user.role
+    var coordType = 'N/A'
+    var coordArea = 'N/A'
+    if (user.schoolInCharge !== 'N/A'){
+        coordType = 'school'
+        coordArea = user.schoolInCharge
+    }
+    if (user.regionInCharge !== 'N/A'){
+        coordType = 'region'
+        coordArea = user.regionInCharge
+    }
+    if (user.countryInCharge !== 'N/A'){
+        coordType = 'country'
+        coordArea = user.countryInCharge
+    }
     var data = {title: 'Manage Users',
                 username: user.username,
                 fullName: user.fullName,
                 onHold: user.onHold,
                 inPool: user.inPool,
+                school: user.school,
                 role: user.role,
                 csrfToken: req.csrfToken(),
                 schedulerOn: global.schedulerJob.running,
@@ -405,7 +424,8 @@ router.post('/search', [authentication.isAuthenticated, authentication.isAdminis
                 interests: global.enums.interests,
                 courses: global.enums.courses,
                 schedulerOn: global.schedulerJob.running};
-    User.searchUsers(keyword, function (err, users) {
+    console.log(coordType, coordArea)
+    User.searchUsers(type, coordType, coordArea, keyword, function (err, users) {
         if (err) {
             data.message = 'An error has occured. Please try again.';
         } else if (users.length === 0) {

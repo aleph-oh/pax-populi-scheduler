@@ -55,7 +55,7 @@ var Authentication = function() {
     */
     newAuth.isAdministrator = function (req, res, next) {
         var user = req.session.passport.user;
-        if (utils.isAdministrator(user.role)) {
+        if (utils.isAdministrator(user.role) || utils.isCoordinator((user.role))) {
             next();
         } else {
             res.render('home', {title: 'Pax Populi Scheduler',

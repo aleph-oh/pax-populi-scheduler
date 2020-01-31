@@ -302,6 +302,7 @@ UserSchema.statics.archiveUser = function (username, callback) {
 
 /*
 * Checks if the provided username and password correspond to any user
+* creates a user object
 * @param {String} username - username of the account to grant authentication
 * @param {String} password - password of the account to grant authentication 
 * @param {Function} callback - the function that gets called after the check is done, err argument
@@ -328,6 +329,12 @@ UserSchema.statics.authenticate = function (username, password, callback) {
                                     onHold: user.onHold,
                                     inPool: user.inPool,
                                     role: user.role,
+                                    dateOfBirth: user.dateOfBirth,
+                                    gender: user.gender,
+                                    school: user.school,
+                                    schoolInCharge: user.schoolInCharge,
+                                    regionInCharge: user.regionInCharge,
+                                    countryInCharge: user.countryInCharge,
                                     fullName: user.firstName + ' ' + user.lastName});
                 } else {
                     callback({message:'Please enter a correct password'});
@@ -574,7 +581,7 @@ UserSchema.statics.changePassword = function(username, newPassword, callback){
 UserSchema.statics.getUser = function(username, callback){
     this.findOne({username: username}, function(err,user){
         if (err) {
-            console.log("Invalid usernmae");
+            console.log("Invalid username");
             callback(new Error("Invalid username."));
         } 
         else {
@@ -610,18 +617,81 @@ UserSchema.statics.getUserByEmail = function(emailInput, callback){
  * @param {Function} callback - The function to execute after the user is found. Callback
  * function takes 1 parameter: an error when the request is not properly claimed
  */
-UserSchema.statics.searchUsers = function(name, callback) {
-    var query = name.length === 0 ? {verified: true, approved: true} : {$and: [{$and: [{verified: true, approved: true}, 
-                                                 {$or: [{firstName: new RegExp(["^", name, "$"].join(""), "i")},
-                                                        {lastName: new RegExp(["^", name, "$"].join(""), "i")}]}]}]};
-    this.find(query, function (err, users){
-        if (err) {
-            callback({success: false, message: err.message});
-        } 
-        else {
-            callback(null, users);
-        }
-    });
+
+UserSchema.statics.searchUsers = function(type, coordType, coordArea, name, callback) {
+    if (type === "Administrator") {
+        var query = name.length === 0 ? {verified: true, approved: true} : {
+            $and: [{
+                $and: [{verified: true, approved: true},
+                    {
+                        $or: [{firstName: new RegExp(["^", name, "$"].join(""), "i")},
+                            {lastName: new RegExp(["^", name, "$"].join(""), "i")}]
+                    }]
+            }]
+        };
+        console.log(name, coordArea)
+        this.find(query, function (err, users) {
+            if (err) {
+                callback({success: false, message: err.message});
+            } else {
+                callback(null, users);
+            }
+        });
+    }else if (type === "Coordinator" && coordType === 'school') {
+        var query = name.length === 0 ? {school: {$eq: coordArea}, verified: true, approved: true} : {
+            $and: [{
+                $and: [{school: {$eq: coordArea}, verified: true, approved: true},
+                    {
+                        $or: [{firstName: new RegExp(["^", name, "$"].join(""), "i")},
+                            {lastName: new RegExp(["^", name, "$"].join(""), "i")}]
+                    }]
+            }]
+        };
+        console.log(name, coordArea)
+        this.find(query, function (err, users) {
+            if (err) {
+                callback({success: false, message: err.message});
+            } else {
+                callback(null, users);
+            }
+        });
+    }else if (type === "Coordinator" && coordType === 'region') {
+            var query = name.length === 0 ? {school: {$eq: coordArea}, verified: true, approved: true} : {
+                $and: [{
+                    $and: [{region: {$eq: coordArea}, verified: true, approved: true},
+                        {
+                            $or: [{firstName: new RegExp(["^", name, "$"].join(""), "i")},
+                                {lastName: new RegExp(["^", name, "$"].join(""), "i")}]
+                        }]
+                }]
+            };
+            console.log(name, coordArea)
+            this.find(query, function (err, users) {
+                if (err) {
+                    callback({success: false, message: err.message});
+                } else {
+                    callback(null, users);
+                }
+            });
+    }else if (type === "Coordinator" && coordType === 'country') {
+        var query = name.length === 0 ? {school: {$eq: coordArea}, verified: true, approved: true} : {
+            $and: [{
+                $and: [{country: {$eq: coordArea}, verified: true, approved: true},
+                    {
+                        $or: [{firstName: new RegExp(["^", name, "$"].join(""), "i")},
+                            {lastName: new RegExp(["^", name, "$"].join(""), "i")}]
+                    }]
+            }]
+        };
+        console.log(name, coordArea)
+        this.find(query, function (err, users) {
+            if (err) {
+                callback({success: false, message: err.message});
+            } else {
+                callback(null, users);
+            }
+        });
+    }
 };
 
 /*
