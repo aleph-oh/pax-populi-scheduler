@@ -29,8 +29,8 @@ $(document).ready(function () {
     $('.reset-button').click(function () {
         var validForm = {};
 
-        var username = $('#username').val();
-        var resetToken = $('#resetToken').val();
+        var username = $('#username-' + id).val();
+        var resetToken = $('#resetToken-' + id).val();
         var csrf = $('#csrf').val();
 
         var notAllowedPattern = new RegExp (JSON.parse($("#notAllowedRegexReset").val()));
