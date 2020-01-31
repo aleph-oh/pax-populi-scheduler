@@ -55,7 +55,7 @@ $(document).ready(function () {
         }
 
         var allValid = true;
-        // console.log(validForm);
+        console.log(validForm);
         for (var key in validForm){
             if (validForm[key] === false){
                 allValid = false;
@@ -89,7 +89,7 @@ $(document).ready(function () {
         }
     });
 
-    /*
+
     $("#new-password-box").blur(function(){
 
         var pw = $("#new-password-box").val();
@@ -117,7 +117,7 @@ $(document).ready(function () {
             }
         }
     });
-     */
+
 
     $('.approve-button, .reject-button, .waitlist-button').click(function () {
         var id = $(this).attr('id').split('-').slice(-1)[0];
