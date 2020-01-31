@@ -175,6 +175,40 @@ router.put('/verify/:username/:verificationToken', parseForm, csrfProtection, fu
     });
 });
 
+
+// Directs user to reset password page, prompts password reset
+router.get('/reset/:username/:resetToken', function(req, res, next) {
+    var username = req.params.username;
+    data = {title: 'Pax Populi Scheduler',
+        message: 'Hello ' + username + '! Click below to reset your password',
+        username: username,
+        resetToken: req.params.resetToken,
+        csrfToken: req.csrfToken()};
+    Object.assign(data, formDefaults);
+    res.render('home', data);
+});
+
+// Resets password, tells user
+router.put('/reset/:username/:verificationToken', parseForm, csrfProtection, function(req, res, next) {
+
+    User.changePassword(req.params.username, req.params.newPassword, function (err, user){
+        data = {title: 'Pax Populi Scheduler',
+            csrfToken: req.csrfToken()};
+        Object.assign(data, formDefaults);
+        if (err) {
+            data.message = err.message;
+            return res.json({'success': false, message: err.message});
+        } else {
+            data.success = true;
+            data.redirect = '/';
+            data.message = err.message;
+            return res.json(data);
+        }
+    });
+
+});
+
+
 // Directs admin to request page
 router.get('/respond/:username/:requestToken', [authentication.isAuthenticated, authentication.isAdministrator], function(req, res, next) {
     var username = req.params.username;
@@ -335,6 +369,27 @@ router.post('/signup', parseForm, csrfProtection, function(req, res, next) {
                     res.render('home', data);
                 }
             });
+        }
+    });
+});
+
+// reset password
+router.post('/reset', parseForm, csrfProtection, function(req, res, next) {
+    console.log('resetting password...');
+    var data = {title: 'Pax Populi Scheduler',
+        csrfToken: req.csrfToken()};
+    Object.assign(data, formDefaults);
+
+    var email = req.body.email;
+    User.resetPassword(email, req.devMode, function (err, user) {
+        if (err) {
+            data.message = err.message;
+            res.render('home', data);
+        } else {
+            console.log('user', user);
+            data.message = 'Password reset successful! We have sent you a password reset link. '
+                + 'Please check your email.';
+            res.render('home', data);
         }
     });
 });

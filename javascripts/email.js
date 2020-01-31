@@ -67,28 +67,35 @@ var Email = function() {
 
     // Adapted from https://www.quora.com/How-can-you-send-a-password-email-verification-link-using-NodeJS-1
     /**
-    * Creates a random enums.numTokenDigits-long token for the spepcified user
+    * Creates a random enums.numTokenDigits-long token for the specified user
     * @param {Object} user - the user object for while the verification token is for
     * @param {Function} callback - the function to call after the token has been created
     */
-    newEmail.createToken = function (user, isVerifyToken, callback) {
+    newEmail.createToken = function (user, isVerifyToken, isRequestToken, callback) {
         // create random 32 character token
         var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         var token = '';
         for (var i = enums.numTokenDigits(); i > 0; --i) {
             token += chars[Math.round(Math.random() * (chars.length - 1))];
         }
-        isVerifyToken ? user.setVerificationToken(token, callback) : user.setRequestToken(token, callback);
+        if (isVerifyToken) {
+            user.setVerificationToken(token, callback);
+        } else if (isRequestToken) {
+            user.setRequestToken(token, callback);
+        } else {
+            user.setResetToken(token, callback);
+        }
+        // isVerifyToken ? user.setVerificationToken(token, callback) : user.setRequestToken(token, callback);
     };
 
     /**
-    * Sends verfication email to user with the confirm button that links to verify request
+    * Sends verification email to user with the confirm button that links to verify request
     * @param {Object} user - the user object for while the verification token is for
     * @param {Boolean} developmentMode - true if the app is in development mode, false otherwise
     * @param {Function} callback - the function to call after the email has been sent
     */
     newEmail.sendVerificationEmail = function (user, developmentMode, callback) {
-        newEmail.createToken(user, true, function (err, user) {
+        newEmail.createToken(user, true, false, function (err, user) {
             var subject = 'Confirm your Pax Populi Scheduler Account, {}!'.format(user.username);
             var link;
             if (developmentMode) {
@@ -105,23 +112,22 @@ var Email = function() {
 
     /**
      * Sends password reset email to user with the reset button that links to verify request
-     * @param {Object} user - the user object for while the verification token is for
+     * @param {Object} user - the user object for while the reset token is for
      * @param {Boolean} developmentMode - true if the app is in development mode, false otherwise
      * @param {Function} callback - the function to call after the email has been sent
      */
     newEmail.sendResetEmail = function (user, developmentMode, callback) {
-        newEmail.createToken(user, true, function (err, user) {
+        newEmail.createToken(user, false, false, function (err, user) {
             var subject = 'Reset your Pax Populi Scheduler Account password, {}!'.format(user.username);
             var link;
             if (developmentMode) {
-                link = 'http://localhost:3000/reset/{}/{}'.format(user.username, user.verificationToken);
+                link = 'http://localhost:3000/reset/{}/{}'.format(user.username, user.resetToken);
             } else {
-                link = '{}/reset/{}/{}'.format((process.env.PRODUCTION_URL || config.productionUrl()), user.username, user.verificationToken); //provide productionUrl in config.js needing to test
+                link = '{}/reset/{}/{}'.format((process.env.PRODUCTION_URL || config.productionUrl()), user.username, user.resetToken); //provide productionUrl in config.js needing to test
             }
             var content = '{}<p>Hi {}!<br><br>Reset your Pax Populi Scheduler account password by clicking on the reset button below.<form action="{}"><input type="submit" value="Confirm" /></form>{}</p>'.format(newEmail.welcomeMessage, user.firstName, link, newEmail.signature);
             console.log('about to send a verification email to', user.email);
             sendEmail(user.email, subject, content, callback);
-
         });
     };
 
@@ -213,7 +219,7 @@ var Email = function() {
     * @param {Function} callback - the function to call after the email has been sent
     */
     newEmail.sendApprovalRequestEmail = function (user, developmentMode, admins, callback) {
-        newEmail.createToken(user, false, function (err, user) {
+        newEmail.createToken(user, false, true, function (err, user) {
             if (err) {
                 return callback({success: false, message: err.message});
             }
@@ -264,7 +270,7 @@ var Email = function() {
     };
 
     /**
-    * Make the content of the approval requset email for the given admin and user
+    * Make the content of the approval request email for the given admin and user
     * @param {Object} user - the user object of the account
     * @param {Boolean} developmentMode - true if the app is in developmentMode
     * @param {Object} admin - the admin object to send an email to

@@ -20,6 +20,7 @@ var UserSchema = mongoose.Schema({
     inPool: {type: Boolean, default: false}, 
     onHold: {type: Boolean, default: false},
     archived: {type: Boolean, default: false},
+    resetToken: {type: String, default: null},
     role: {type: String, enum: enums.userTypes(), required: true},
     isRegularUser: {type: Boolean, default: false},
     email: {type: String, required: true},
@@ -87,15 +88,22 @@ UserSchema.path("verificationToken").validate(function(verificationToken) {
     return this.verificationToken.length == enums.numTokenDigits();
 }, "Verification token must have the correct number of digits");
 
-UserSchema.path("requestToken").validate(function(verificationToken) {
+UserSchema.path("requestToken").validate(function(requestToken) {
     if (!this.requestToken) {
         return true;
     }
     return this.requestToken.length == enums.numTokenDigits();
 }, "Request token must have the correct number of digits");
 
+UserSchema.path("resetToken").validate(function(resetToken) {
+    if (!this.resetToken) {
+        return true;
+    }
+    return this.resetToken.length == enums.numTokenDigits();
+}, "Reset token must have the correct number of digits");
+
 /**
-* Searches for an exisiting super admin object in the database. If there is not one, initializes one
+* Searches for an existing super admin object in the database. If there is not one, initializes one
 * using all the defaults in javascripts/config.js
 * @param {Function} callback - the function that gets called after the schedules are fetched
 */
@@ -168,6 +176,16 @@ UserSchema.methods.verify = function (callback) {
 */
 UserSchema.methods.setRequestToken = function (token, callback) {
     this.requestToken = token;
+    this.save(callback);
+};
+
+/**
+ * Sets a reset token for the user
+ * @param {String} token - the verification token of the user
+ * @param {Function} callback - the function that gets called after the token is set
+ */
+UserSchema.methods.setResetToken = function (token, callback) {
+    this.resetToken = token;
     this.save(callback);
 };
 
@@ -375,6 +393,36 @@ UserSchema.statics.signUp = function (userJSON, devMode, callback) {
         }
     });
 };
+
+/*
+* Checks that the email is valid and then sends an email reset email.
+* @param {Object} email - submitted email
+* @param {Boolean} devMode - true if the app is in developer mode, false otherwise
+* @param {Function} callback - the function that gets called after the user is created, err argument
+*                              is null if the given the registration succeed, otherwise, err.message
+*                              contains the appropriate message to show to the user
+*/
+UserSchema.statics.resetPassword = function (email, devMode, callback) {
+    that = this;
+    that.count({ email: email }, function (err, count) {
+        if (err) {
+            return callback({success: false, message: 'Database error'});
+        } else if (count === 0) {
+            callback({
+                message: 'There is no account associated with this email address.'
+                    + 'Please make sure you have entered your email address correctly.'});
+        } else {
+            User.getUserByEmail(email, function (err, user){
+                if (err) {
+                    callback({success: false, message: err.message});
+                } else {
+                    that.sendPasswordResetEmail(user.username, devMode, callback);
+                }
+            });
+        }
+    });
+};
+
 
 /*
 * Sends a verification email to the user if there exists an account with such username.

@@ -38,6 +38,24 @@
                 <button id='waitlist-button-{{user._id}}' class='btn btn-warning btn-hg waitlist-button'>Waitlist</button>
               </center>
             </div>
+          {{else if resetToken}}
+            <div>
+                <input id='username-{{user._id}}' type="hidden" value="{{username}}"></input>
+                <input id='resetToken-{{user._id}}' type="hidden" value="{{resetToken}}"></input>
+                <input id='csrf' type="hidden" name="_csrf" value="{{csrfToken}}">
+
+                <input type="hidden" value="{{passwordRegex}}" name="passwordRegex" id="passwordRegexReset">
+                <input type="hidden" value="{{notAllowedRegex}}" name="notAllowedRegex" id="notAllowedRegexReset">
+
+                <div class="form-group">
+                    <div>
+                        <input id='new-password-box' class='form-control signup-input' type='password' name='password' placeholder='new password' required></input>
+                    </div>
+                    <div class="formErr" id="npwErrors"></div>
+                </div>
+
+                <button id='reset-button-{{user._id}}' class='btn btn-primary btn-hg'>Reset Password</button>
+            </div>
           {{else if archived}}
           {{else if isValidAccount}}
             <form id='verification-form' action='/verify/{{username}}/resend' method='get'>
