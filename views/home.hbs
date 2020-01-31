@@ -44,8 +44,8 @@
                 <input id='resetToken-{{user._id}}' type="hidden" value="{{resetToken}}"></input>
                 <input id='csrf' type="hidden" name="_csrf" value="{{csrfToken}}">
 
-                <input type="hidden" value="{{passwordRegex}}" name="passwordRegex" id="passwordRegexReset">
-                <input type="hidden" value="{{notAllowedRegex}}" name="notAllowedRegex" id="notAllowedRegexReset">
+                <input id="passwordRegexReset" type="hidden" value="{{passwordRegex}}" name="passwordRegex">
+                <input id="notAllowedRegexReset" type="hidden" value="{{notAllowedRegex}}" name="notAllowedRegex">
 
                 <div class="form-group">
                     <div>
