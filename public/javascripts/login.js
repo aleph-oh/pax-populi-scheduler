@@ -66,7 +66,7 @@ $(document).ready(function () {
             $.ajax({
                 url: '/reset/'+username+'/'+resetToken,
                 type: 'PUT',
-                data: {username: username, resetToken: resetToken, _csrf: csrf, newPassword: pw}, // AND THE NEW PASSWORD
+                data: {username: username, resetToken: resetToken, _csrf: csrf, password: pw}, // AND THE NEW PASSWORD
                 success: function(data) {
                     if (data.success) {
                         addMessage(data.message, true);
