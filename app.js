@@ -1,34 +1,34 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var exphbs = require('express-handlebars');
-var session = require('express-session');
-var passport = require('passport');
-var passportLocal = require('passport-local');
-var csrf = require('csurf');
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var registrations = require('./routes/registrations.js');
-var schedules = require('./routes/schedules.js');
-var hbsHelpers = require('./javascripts/hbsHelpers.js');
-var Schedule = require('./models/schedule.js');
-var Enum = require('./models/enum.js');
-var User = require('./models/user.js');
-const AdminEdit = require('./public/javascripts/adminEdit.js');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('passport-local');
+const csrf = require('csurf');
+const routes = require('./routes/index');
+const users = require('./routes/users');
+const registrations = require('./routes/registrations.js');
+const schedules = require('./routes/schedules.js');
+const hbsHelpers = require('./javascripts/hbsHelpers.js');
+const Schedule = require('./models/schedule.js');
+const Enum = require('./models/enum.js');
+const User = require('./models/user.js');
+//const AdminDelete = require('./public/javascripts/registrationDelete.js');
 
 // database setup
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/paxpopulidb');
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
     console.log("database connected");
 });
 
-var app = express();
+const app = express();
 
 
 // view engine setup
@@ -75,8 +75,8 @@ app.use(function (req, res, next) {
 
 
 // setup csurf middlewares 
-var csrfProtection = csrf({ cookie: true });
-var parseForm = bodyParser.urlencoded({ extended: false });
+const csrfProtection = csrf({cookie: true});
+const parseForm = bodyParser.urlencoded({extended: false});
 
 // parse cookies since "cookie" is true in csrfProtection 
 app.use(cookieParser());
@@ -92,8 +92,8 @@ app.use('/schedules', schedules);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
+    const err = new Error('Not Found');
+    err.status = 404;
   next(err);
 });
 
