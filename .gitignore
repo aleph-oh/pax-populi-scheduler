@@ -1,6 +1,7 @@
 npm-debug.log
 public/availability.html
 public/javascripts/vendor/bower_components
+!public/javascripts/vendor/bower_components/angular-timezone-selector/dist/angular-timezone-selector.css
 public/vendor
 .DS_Store
 .gitignore~
