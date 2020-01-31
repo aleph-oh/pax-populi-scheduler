@@ -64,7 +64,7 @@ $(document).ready(function () {
         }
         if (allValid){
             $.ajax({
-                url: '/verify/'+username+'/'+resetToken,
+                url: '/reset/'+username+'/'+resetToken,
                 type: 'PUT',
                 data: {username: username, resetToken: resetToken, _csrf: csrf, newPassword: pw}, // AND THE NEW PASSWORD
                 success: function(data) {
