@@ -62,7 +62,9 @@ $(document).ready(function () {
             }
 
         }
+        console.log("Got to here!")
         if (allValid){
+            console.log("Got to here???")
             $.ajax({
                 url: '/reset/'+username+'/'+resetToken,
                 type: 'PUT',

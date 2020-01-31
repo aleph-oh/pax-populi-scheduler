@@ -126,7 +126,7 @@ var Email = function() {
                 link = '{}/reset/{}/{}'.format((process.env.PRODUCTION_URL || config.productionUrl()), user.username, user.resetToken); //provide productionUrl in config.js needing to test
             }
             var content = '{}<p>Hi {}!<br><br>Reset your Pax Populi Scheduler account password by clicking on the reset button below.<form action="{}"><input type="submit" value="Confirm" /></form>{}</p>'.format(newEmail.welcomeMessage, user.firstName, link, newEmail.signature);
-            console.log('about to send a verification email to', user.email);
+            console.log('about to send a reset email to', user.email);
             sendEmail(user.email, subject, content, callback);
         });
     };
