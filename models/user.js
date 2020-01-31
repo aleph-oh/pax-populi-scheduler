@@ -412,7 +412,7 @@ UserSchema.statics.resetPassword = function (email, devMode, callback) {
                 message: 'There is no account associated with this email address.'
                     + 'Please make sure you have entered your email address correctly.'});
         } else {
-            User.getUserByEmail(email, function (err, user){
+            that.getUserByEmail(email, function (err, user){
                 if (err) {
                     callback({success: false, message: err.message});
                 } else {
