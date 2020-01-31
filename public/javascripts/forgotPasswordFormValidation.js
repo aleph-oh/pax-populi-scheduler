@@ -25,7 +25,6 @@ $(document).ready(function(){
             $("#emailResetErrors").append("<p>Please use a non .edu email address.</p>");
         }
 
-
         var allValid = true;
         // console.log(validForm);
         for (var key in validForm){

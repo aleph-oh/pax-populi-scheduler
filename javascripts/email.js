@@ -104,6 +104,28 @@ var Email = function() {
     };
 
     /**
+     * Sends password reset email to user with the reset button that links to verify request
+     * @param {Object} user - the user object for while the verification token is for
+     * @param {Boolean} developmentMode - true if the app is in development mode, false otherwise
+     * @param {Function} callback - the function to call after the email has been sent
+     */
+    newEmail.sendResetEmail = function (user, developmentMode, callback) {
+        newEmail.createToken(user, true, function (err, user) {
+            var subject = 'Reset your Pax Populi Scheduler Account password, {}!'.format(user.username);
+            var link;
+            if (developmentMode) {
+                link = 'http://localhost:3000/reset/{}/{}'.format(user.username, user.verificationToken);
+            } else {
+                link = '{}/reset/{}/{}'.format((process.env.PRODUCTION_URL || config.productionUrl()), user.username, user.verificationToken); //provide productionUrl in config.js needing to test
+            }
+            var content = '{}<p>Hi {}!<br><br>Reset your Pax Populi Scheduler account password by clicking on the reset button below.<form action="{}"><input type="submit" value="Confirm" /></form>{}</p>'.format(newEmail.welcomeMessage, user.firstName, link, newEmail.signature);
+            console.log('about to send a verification email to', user.email);
+            sendEmail(user.email, subject, content, callback);
+
+        });
+    };
+
+    /**
     * Sends an email to inform the user that his/her account has been approved
     * @param {Object} user - the user object whose account just got approved
     * @param {Object} developmentMode - true if the app is in development mode, false otherwise

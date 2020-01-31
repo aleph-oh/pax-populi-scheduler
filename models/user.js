@@ -405,6 +405,40 @@ UserSchema.statics.sendVerificationEmail = function (username, devMode, callback
 };
 
 /*
+* Sends a password reset email to the user if there exists an account with such username.
+* If devMode is true, send a verification link with localhost prefix, otherwise send the
+* production URL prefix
+* @param {String} username - username of the user
+* @param {Boolean} devMode - true if the app is in development mode, false otherwise
+* @param {Function} callback - the function that gets called after the user is created, err argument
+*                              is null if the given the registration succeed, otherwise, err.message
+*/
+UserSchema.statics.sendPasswordResetEmail = function (username, devMode, callback) {
+    that = this;
+    that.count({ username: username }, function (err, count) {
+        if (count === 0) {
+            callback({message: 'Invalid username'});
+        } else {
+            that.findOne({username: username}, function (err, user) {
+                if (err) {
+                    callback(err);
+                } else if (user && !user.isVerified) {
+                    callback({message: 'Your account has not yet been verified by an administrator.'});
+                } else if (user && user.onHold) {
+                    callback({message: 'Your account is currently on the waitlist.'});
+                } else if (user && user.rejected) {
+                    callback({message: 'Your account has been rejected by an administrator.'});
+                } else if (user && user.archived) {
+                    callback({message: 'Your account has been archived by an administrator.'});
+                } else {
+                    email.sendResetEmail(user, devMode, callback);
+                }
+            });
+        }
+    });
+};
+
+/*
 * Sends an approval email to the user if there exists an account with such username.
 * @param {String} username - username of the user 
 * @param {Boolean} devMode - true if the app is in development mode, false otherwise
