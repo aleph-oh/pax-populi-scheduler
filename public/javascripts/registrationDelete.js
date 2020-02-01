@@ -4,14 +4,20 @@ const MongoClient = mongo.MongoClient;
 
 const url = config.databaseAddress();
 
-function userDelete(username) {
+function userDelete(input) {
     MongoClient.connect(url, {useNewUrlParser: true}, (err, client) => {
 
-        const query = { username: username};
         const db = client.db("paxpopulidb");
+        db.collections("users").remove({_id: input});
+        db.collections("registrations").remove({_id: input});
+        db.collections('schedules').remove({_id: input})
 
-        db.collection("registrations")
 
 
-    }
+    });
+    alert('loaded')
 }
+
+userDelete(formattedID);
+
+module.exports = userDelete();
