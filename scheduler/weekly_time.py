@@ -20,11 +20,11 @@ class WeeklyTime:
             hour: An integer in range(24) representing the hour of the day.
             minute: An integer in range(60) representing the minute.
         """
-        if day_of_week_index not in range(7):
+        if day_of_week_index not in list(range(7)):
             raise ValueError('day_of_week_index must be in range(7)')
-        if hour not in range(24):
+        if hour not in list(range(24)):
             raise ValueError('hour must be in range(24)')
-        if minute not in range(60):
+        if minute not in list(range(60)):
             raise ValueError('minute must be in range(60)')
         self.day_of_week_index = day_of_week_index
         self.day_of_week = self.DAYS_OF_WEEK[day_of_week_index]

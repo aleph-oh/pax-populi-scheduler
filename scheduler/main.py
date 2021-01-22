@@ -41,12 +41,12 @@ def run_scheduler(registrations):
     scheduler = Scheduler(students, tutors)
     schedule_dicts = scheduler.schedule_dicts_for_database()
     # print instead of return because python-shell receives this data from Python stdout
-    print json.dumps(schedule_dicts) 
+    print(json.dumps(schedule_dicts)) 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("registrations",
-                        type=string_parser.json_loads_byteified,
+                        type=json.loads,
                         help="a list of unmatched registrations") 
     args = parser.parse_args()
     run_scheduler(args.registrations)

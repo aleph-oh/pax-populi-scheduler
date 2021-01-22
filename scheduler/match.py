@@ -71,8 +71,8 @@ class Match:
         student_course_schedule_naive = [student_first_course_dt
                                          + timedelta(days=Availability.DAYS_PER_WEEK*i)
                                          for i in range(self.weeks_per_course)]    
-        student_course_schedule = map(self.student.tz.localize,
-                                      student_course_schedule_naive)
+        student_course_schedule = list(map(self.student.tz.localize,
+                                      student_course_schedule_naive))
         tutor_course_schedule = [student_dt.astimezone(self.tutor.tz)
                                  for student_dt in student_course_schedule]
         UTC_course_schedule = [student_dt.astimezone(pytz.utc)
@@ -122,9 +122,9 @@ class Match:
     def to_dict(self):
         """Outputs self as dict for the database."""
         dt_to_str = lambda x: x.strftime('%Y-%m-%d %H:%M')
-        student_schedule_strings = map(dt_to_str, self.student_course_schedule)
-        tutor_schedule_strings = map(dt_to_str, self.tutor_course_schedule)
-        UTC_schedule_strings = map(dt_to_str, self.UTC_course_schedule)
+        student_schedule_strings = list(map(dt_to_str, self.student_course_schedule))
+        tutor_schedule_strings = list(map(dt_to_str, self.tutor_course_schedule))
+        UTC_schedule_strings = list(map(dt_to_str, self.UTC_course_schedule))
         match_dict = {'studentID': self.student.user_id,
                       'tutorID': self.tutor.user_id,
                       'studentRegID': self.student.reg_id,

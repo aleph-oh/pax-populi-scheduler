@@ -41,7 +41,7 @@ class Scheduler:
             raise ValueError('weeks_per_course must be a positive integer')
         self.students = students
         self.tutors = tutors
-        self.tutor_id_to_tutor = dict(zip(self.tutor_ids, self.tutors))
+        self.tutor_id_to_tutor = dict(list(zip(self.tutor_ids, self.tutors)))
         self.weeks_per_course = weeks_per_course
         self.source = Vertex('SOURCE')
         self.sink = Vertex('SINK')
@@ -125,5 +125,5 @@ class Scheduler:
     def schedule_dicts_for_database(self):
         student_tutor_to_matches = self.match_max_flow()
         schedule_dicts = [self.matches_to_schedule_dict(matches)
-                          for matches in student_tutor_to_matches.values()]
+                          for matches in list(student_tutor_to_matches.values())]
         return schedule_dicts

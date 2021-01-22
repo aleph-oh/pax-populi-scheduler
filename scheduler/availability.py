@@ -15,9 +15,9 @@ class Availability:
     MINUTES_PER_SLOT = 15
     if MINUTES_PER_HOUR % MINUTES_PER_SLOT != 0:
         raise ValueError('MINUTES_PER_SLOT must be a divisor of 60')
-    SLOTS_PER_HOUR = MINUTES_PER_HOUR / MINUTES_PER_SLOT
+    SLOTS_PER_HOUR = MINUTES_PER_HOUR // MINUTES_PER_SLOT
     SLOTS_PER_DAY = SLOTS_PER_HOUR * HOURS_PER_DAY
-    SLOTS_PER_WEEK = MINUTES_PER_WEEK / MINUTES_PER_SLOT
+    SLOTS_PER_WEEK = MINUTES_PER_WEEK // MINUTES_PER_SLOT
     MINUTES_PER_COURSE = 90
     SLOTS_PER_COURSE = int(math.ceil(MINUTES_PER_COURSE / float(MINUTES_PER_SLOT)))
     SLOT_START_TIMES = []
@@ -83,9 +83,9 @@ class Availability:
             raise ValueError('time_str must be of the form "HH:MM"') 
         hours = int(time_str.split(':')[0])
         minutes = int(time_str.split(':')[1])
-        if hours not in range(cls.HOURS_PER_DAY+1):
+        if hours not in list(range(cls.HOURS_PER_DAY+1)):
             raise ValueError('The hour part of time_str must be in range(25)')
-        if minutes not in range(cls.MINUTES_PER_HOUR):
+        if minutes not in list(range(cls.MINUTES_PER_HOUR)):
             raise ValueError('The minute part of time_str must be in range(60)')
         total_minutes = cls.MINUTES_PER_HOUR * hours + minutes
         if total_minutes % cls.MINUTES_PER_SLOT != 0:
@@ -117,7 +117,7 @@ class Availability:
                 during the slot starting at cls.SLOT_START_TIMES[i]
         """ 
         for day_index_str in availability_dict:
-            if day_index_str not in map(str, range(cls.DAYS_PER_WEEK)):
+            if day_index_str not in list(map(str, list(range(cls.DAYS_PER_WEEK)))):
                 raise ValueError('Each key in availability_dict must be a string form of an integer in range(7)')
         free_slots_indices = set([])
         for day_str in availability_dict:
@@ -130,7 +130,7 @@ class Availability:
                     raise ValueError('time interval in availability_dict must have different start time and end time')
                 start_index = day_slot_index + cls.time_str_to_index(interval[0])
                 end_index = day_slot_index + cls.time_str_to_index(interval[1])
-                free_slots_indices.update(range(start_index, end_index))
+                free_slots_indices.update(list(range(start_index, end_index)))
         return free_slots_indices
 
     @classmethod
@@ -157,7 +157,7 @@ class Availability:
                 availability_dict.
         """
         for day_index_str in availability_dict:
-            if day_index_str not in map(str, range(cls.DAYS_PER_WEEK)):
+            if day_index_str not in list(map(str, list(range(cls.DAYS_PER_WEEK)))):
                 raise ValueError('Each key in availability_dict must be a string form of an integer in range(7)')
         free_slots_indices = cls.parse_dict(availability_dict)
         free_slots = [(i in free_slots_indices) for i in range(cls.SLOTS_PER_WEEK)]
