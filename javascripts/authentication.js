@@ -1,6 +1,6 @@
 const request = require('request');
 const config = require('./config.js');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const utils = require('./utils.js');
 const enums = require('./enums.js');
 

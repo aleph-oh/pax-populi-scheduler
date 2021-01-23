@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var utils = require("../javascripts/utils.js");
 var email = require('../javascripts/email.js');
